@@ -1,0 +1,21 @@
+{
+  "name": "mindcore-backend",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "dev": "node --watch src/server.js",
+    "start": "node src/server.js"
+  },
+  "engines": {
+    "node": ">=22"
+  },
+  "dependencies": {
+    "cors": "^2.8.5",
+    "dotenv": "^16.4.7",
+    "express": "^4.22.3",
+    "express-rate-limit": "^8.7.0",
+    "nodemailer": "^10.0.13",
+    "zod": "^4.6.5"
+  }
+}
