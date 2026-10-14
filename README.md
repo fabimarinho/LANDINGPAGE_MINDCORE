@@ -1,105 +1,90 @@
 # MindCore — Landing Page
 
-Landing page profissional para a **MindCore**, empresa de tecnologia. Projeto fullstack com frontend React e backend Node.js.
+Landing page moderna e de alta performance para a **MindCore**, empresa de soluções inteligentes em tecnologia.
+Projeto 100% estático (JAMstack), construído com **React**, **Vite** e **Tailwind CSS**.
 
-## Estrutura
+---
+
+## 🚀 Estrutura
 
 ```
 LANDING PAGE MIND CORE/
-├── frontend/     → React + Vite + Tailwind CSS
-└── backend/      → Node.js + Express (API de contato)
+└── frontend/     → React + Vite + Tailwind CSS + Lucide Icons
 ```
 
-## Seções da página
+---
+
+## 📄 Seções da Página
 
 - **Header** — Navegação fixa com menu responsivo
-- **Hero** — Headline, CTAs e imagem de fundo
-- **Sobre** — Filosofia da empresa
-- **Serviços** — 5 cards de serviços
-- **Como Trabalhamos** — Processo em 6 etapas
-- **Diferenciais** — 5 pilares de confiança
-- **Depoimentos** — Relatos de clientes
-- **CTA Banner** — Chamada para ação
-- **Contato** — WhatsApp, e-mail, localização + formulário
-- **Footer** — Links, serviços e redes sociais
+- **Hero** — Headline de alto impacto, CTAs e background moderno
+- **Sobre** — Posicionamento e filosofia da empresa
+- **Serviços** — Cards detalhando as especialidades da MindCore
+- **Como Trabalhamos** — Metodologia e etapas de atendimento
+- **Diferenciais** — Pilares de confiança e autoridade
+- **Depoimentos** — Depoimentos de clientes
+- **CTA Banner** — Chamada direta para ação
+- **Contato** — Links diretos (WhatsApp, e-mail, localização) + formulário com proteção anti-spam
+- **Footer** — Navegação e canais de contato
 
-## Como rodar
+---
 
-### 1. Frontend
+## 🛠️ Como Executar Localmente
+
+### 1. Instalar dependências
 
 ```bash
 cd frontend
 npm install
-npm run dev
 ```
 
-Acesse: http://localhost:5173
+### 2. Configurar o formulário de contato
 
-### 2. Backend
+Copie o arquivo de exemplo de variáveis de ambiente:
 
 ```bash
-cd backend
-npm install
 cp .env.example .env
+```
+
+Abra o arquivo `.env` e configure a sua chave gratuita do [Web3Forms](https://web3forms.com):
+
+```env
+VITE_WEB3FORMS_ACCESS_KEY=sua-chave-aqui
+```
+
+> 💡 **Como obter a chave:**
+> 1. Acesse [web3forms.com](https://web3forms.com);
+> 2. Digite o e-mail onde deseja receber as mensagens dos clientes;
+> 3. Copie o Access Key enviado ao seu e-mail e cole no `.env`.
+
+### 3. Iniciar o servidor de desenvolvimento
+
+```bash
 npm run dev
 ```
 
-API disponível em: http://localhost:3001
+Acesse no navegador: `http://localhost:5173`
 
-### 3. Testar a API
+---
 
-```bash
-curl http://localhost:3001/api/health
-```
+## ✏️ Personalização de Conteúdo
 
-## Personalização
+Para alterar textos institucionais, serviços, depoimentos, número do WhatsApp, e-mail ou endereço, edite diretamente o arquivo:
+`frontend/src/data/content.ts`
 
-Edite `frontend/src/data/content.ts` para alterar textos, depoimentos, WhatsApp, e-mail e endereço.
+---
 
-## Configuração de e-mail (opcional)
+## 🌐 Deploy na Vercel (100% Gratuito)
 
-Para enviar e-mails reais pelo formulário de contato, configure as variáveis SMTP no arquivo `backend/.env`:
+Como a landing page não necessita de backend, o deploy é instantâneo e sem custos de servidor:
 
-```
-SMTP_HOST=smtp.gmail.com
-SMTP_PORT=587
-SMTP_USER=seu-email@gmail.com
-SMTP_PASS=sua-senha-de-app
-CONTACT_EMAIL=contato@mindcore.com.br
-```
+1. Suba o repositório no seu GitHub.
+2. Acesse a [Vercel](https://vercel.com) e clique em **Add New Project**.
+3. Importe este repositório.
+4. Na tela de configuração:
+   - Defina o **Root Directory** como `frontend`.
+   - Em **Environment Variables**, adicione:
+     - `VITE_WEB3FORMS_ACCESS_KEY` com o seu Access Key do Web3Forms.
+5. Clique em **Deploy**.
 
-Sem SMTP configurado, as mensagens são exibidas no console do backend.
-
-## Deploy
-
-### Frontend na Vercel
-
-1. Publique o repositório no GitHub.
-2. Importe o projeto na [Vercel](https://vercel.com) e defina o **Root Directory** como `frontend`.
-3. Adicione a variável de ambiente `VITE_API_URL` com a URL pública da API (Railway ou Render), por exemplo `https://mindcore-api.up.railway.app`.
-4. Faça o deploy.
-
-### Backend no Railway
-
-1. Crie um projeto em [Railway](https://railway.app) e conecte o repositório.
-2. Defina o root do serviço como `backend`.
-3. Configure as variáveis:
-   - `CORS_ORIGIN` — URL da Vercel (várias origens separadas por vírgula)
-   - `CONTACT_EMAIL`, `SMTP_HOST`, `SMTP_PORT`, `SMTP_USER` e `SMTP_PASS` (opcional)
-4. Use o health check em `/api/health`.
-
-### Backend no Render (alternativa)
-
-1. Use o arquivo `render.yaml` na raiz do projeto ou crie um Web Service com root `backend`.
-2. Build: `npm install` · Start: `npm start`
-3. Configure as mesmas variáveis de ambiente do Railway.
-
-Depois de publicar a API, atualize `VITE_API_URL` na Vercel e faça um novo deploy do frontend.
-
-## Próximos passos sugeridos
-
-- [ ] Substituir WhatsApp, e-mail e endereço pelos dados oficiais
-- [ ] Trocar os depoimentos de exemplo pelos relatos reais
-- [ ] Configurar domínio e SMTP
-- [ ] Adicionar Google Analytics
-- [ ] Criar páginas de Política de Privacidade e Termos de Uso
+Pronto! Seu site estará no ar com HTTPS automático e CDN global.

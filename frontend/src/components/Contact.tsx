@@ -20,6 +20,7 @@ export function Contact() {
   });
   const [status, setStatus] = useState<FormStatus>("idle");
   const [errorMsg, setErrorMsg] = useState("");
+  const [botcheck, setBotcheck] = useState(false);
 
   const handleChange = (
     e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>,
@@ -32,18 +33,47 @@ export function Contact() {
     setStatus("loading");
     setErrorMsg("");
 
+    // Bloqueia envios automatizados por bots
+    if (botcheck) {
+      setStatus("error");
+      setErrorMsg("Falha na validação anti-spam.");
+      return;
+    }
+
+    const accessKey = import.meta.env.VITE_WEB3FORMS_ACCESS_KEY?.trim();
+
+    if (!accessKey) {
+      setStatus("error");
+      setErrorMsg(
+        "Chave de envio de formulário não configurada. Defina VITE_WEB3FORMS_ACCESS_KEY no arquivo .env.",
+      );
+      return;
+    }
+
     try {
-      const apiBase = (import.meta.env.VITE_API_URL || "").replace(/\/$/, "");
-      const res = await fetch(`${apiBase}/api/contact`, {
+      const res = await fetch("https://api.web3forms.com/submit", {
         method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(form),
+        headers: {
+          "Content-Type": "application/json",
+          Accept: "application/json",
+        },
+        body: JSON.stringify({
+          access_key: accessKey,
+          name: form.name.trim(),
+          email: form.email.trim(),
+          phone: form.phone.trim() || "Não informado",
+          message: form.message.trim(),
+          subject: `[MindCore] Nova mensagem de ${form.name.trim()}`,
+          from_name: "Site MindCore",
+        }),
       });
 
       const data = await res.json().catch(() => ({}));
 
-      if (!res.ok) {
-        throw new Error(data.error || "Erro ao enviar mensagem.");
+      if (!res.ok || !data.success) {
+        throw new Error(
+          data.message || "Erro ao enviar mensagem. Tente novamente mais tarde.",
+        );
       }
 
       setStatus("success");
@@ -124,6 +154,17 @@ export function Contact() {
             Ou envie uma mensagem
           </h3>
           <form onSubmit={handleSubmit} className="mt-6 space-y-4">
+            {/* Honeypot anti-spam invisível */}
+            <input
+              type="checkbox"
+              name="botcheck"
+              className="hidden"
+              style={{ display: "none" }}
+              checked={botcheck}
+              onChange={(e) => setBotcheck(e.target.checked)}
+              tabIndex={-1}
+              autoComplete="off"
+            />
             <div className="grid gap-4 sm:grid-cols-2">
               <div className="space-y-2">
                 <label
